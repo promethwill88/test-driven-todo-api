@@ -47,23 +47,32 @@ app.get('/api/todos/search', function search(req, res) {
   /* This endpoint responds with the search results from the
    * query in the request. COMPLETE THIS ENDPOINT LAST.
    */
+
 });
 
 app.get('/api/todos', function index(req, res) {
   /* This endpoint responds with all of the todos
    */
+   res.status(200).json({data:todos});
 });
 
 app.post('/api/todos', function create(req, res) {
   /* This endpoint will add a todo to our "database"
    * and respond with the newly created todo.
    */
+   
 });
 
 app.get('/api/todos/:id', function show(req, res) {
   /* This endpoint will return a single todo with the
    * id specified in the route parameter (:id)
    */
+   // res.json({});
+   let id = parseInt(req.params.id);
+   let result = todos.find((el) => {
+    return el._id === id; 
+   });
+   res.json(result);
 });
 
 app.put('/api/todos/:id', function update(req, res) {
