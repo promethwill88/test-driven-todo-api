@@ -60,12 +60,17 @@ app.post('/api/todos', function create(req, res) {
   /* This endpoint will add a todo to our "database"
    * and respond with the newly created todo.
    */
-   var name = req.body.name;
-   var desc = req.body.description;
-   var newTodo = { task: name, description: desc};
+   let newToDo = req.body;
 
-   todos.push(newTodo);
-   res.json(newTodo);
+   if (todos.length > 0) {
+   newToDo._id = todos[todos.length - 1]._id + 1;
+  }
+  else {
+    newToDo._id = 1;
+  }
+
+   todos.push(newToDo);
+   res.json(newToDo);
 });
 
 app.get('/api/todos/:id', function show(req, res) {
@@ -92,6 +97,12 @@ app.delete('/api/todos/:id', function destroy(req, res) {
    * id specified in the route parameter (:id) and respond
    * with success.
    */
+   let id = parseInt(req.params.id);
+   let result = todos.find((el) => {
+    return el._id === id;
+   });
+   todos.splice(todos.indexOf(result),1);
+   res.json(result);
 });
 
 /**********
